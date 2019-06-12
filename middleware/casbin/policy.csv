@@ -1,0 +1,4 @@
+p, user, /v1/*, (GET)|(POST), allow
+p, user, /v2/*, (GET)|(POST), deny
+p, admin, /*, .+, allow
+g, kuhufu, admin

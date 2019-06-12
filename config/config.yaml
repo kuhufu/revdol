@@ -1,0 +1,28 @@
+
+gin:
+  release: false
+
+mongo:
+  url: "mongodb://localhost:27017"
+
+redis:
+  url: "127.0.0.1:6379"
+
+etcd:
+  url: "127.0.0.1:2379"
+
+gorm:
+  log: false
+  provider: "mysql"
+  url: "root:7266@/revdol?charset=utf8mb4&parseTime=True&loc=Local"
+
+casbin:
+  model: "middleware/casbin/model.conf"
+  policy: "middleware/casbin/policy.csv"
+
+cert:
+  cert: "cert/test_cert.pem"
+  key: "cert/private_key"
+
+http_port: ":1080"
+https_port: ":443"
