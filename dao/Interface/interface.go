@@ -1,4 +1,4 @@
-package dao
+package Interface
 
 import "revdol/model"
 
@@ -10,21 +10,22 @@ type Account interface {
 
 type Source interface {
 	Account
-	Interface
+	Revdol
 }
 
-type Interface interface {
-	GetForumCount(id string) interface{}
-	GetFansNumById(id string) interface{}
-	GetPopularNumById(id string) interface{}
-	GetAllIdolMeta() interface{}
-	GetIdolMetaById(id string) interface{}
-	GetForumById(id string) []byte
-	GetAllForum() []string
-	GetAllUser() []string
-	GetUserById(id string) []byte
-	GetUserContributeById(id string) []byte
-	GetAllUserContribute() func() []string
-	GetIdolById(id string) []byte
-	GetAllIdol() []byte
+type Revdol interface {
+	GetForumCount(id, currentPage int) interface{}
+	GetAllIdolForumCount(currentPage int) interface{}
+	GetFansNumById(id, currentPage int) interface{}
+	GetPopularNumById(id, currentPage int) interface{}
+	GetAllIdolMeta(currentPage int) interface{}
+	GetIdolMetaById(id, currentPage int) interface{}
+	GetForumById(id int) interface{}
+	GetAllForum(currentPage int) interface{}
+	GetAllUser(currentPage int) interface{}
+	GetUserById(id int) interface{}
+	GetUserContributeById(id int) interface{}
+	GetAllUserContribute(currentPage int)interface{}
+	GetIdolById(id int) interface{}
+	GetAllIdol() interface{}
 }

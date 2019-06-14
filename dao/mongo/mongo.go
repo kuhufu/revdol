@@ -1,56 +1,63 @@
-package mongoSource
+package mongo
 
 
-type mdbSource int
+type MdbSource int
 
-func (mdbSource) GetForumCount(id string) interface{} {
-	return GetForumCount(id)
+func New() MdbSource {
+	return MdbSource(0)
 }
 
-func (mdbSource) GetFansNumById(id string) interface{} {
-	panic("implement me")
+func (MdbSource) GetForumCount(id int, page int) interface{} {
+	return GetForumCount(id,  page)
+}
+func (MdbSource) GetAllIdolForumCount(page int) interface{} {
+	return GetAllIdolForumCount(page)
 }
 
-func (mdbSource) GetPopularNumById(id string) interface{} {
-	panic("implement me")
+func (MdbSource) GetFansNumById(id int, currentPage int) interface{} {
+	return GetFansNumById(id, currentPage)
 }
 
-func (mdbSource) GetAllIdolMeta() interface{} {
-	panic("implement me")
+func (MdbSource) GetPopularNumById(id int, currentPage int) interface{} {
+	return GetPopularNumById(id, currentPage)
 }
 
-func (mdbSource) GetIdolMetaById(id string) interface{} {
-	panic("implement me")
+func (MdbSource) GetAllIdolMeta(currentPage int) interface{} {
+	return GetAllIdolMeta(currentPage)
 }
 
-func (mdbSource) GetForumById(id string) []byte {
-	panic("implement me")
+func (MdbSource) GetIdolMetaById(id, page int) interface{} {
+	return GetIdolMetaById(id, page)
 }
 
-func (mdbSource) GetAllForum() []string {
-	panic("implement me")
+func (MdbSource) GetForumById(id int) interface{} {
+	return GetForumById(id)
 }
 
-func (mdbSource) GetAllUser() []string {
-	panic("implement me")
+func (MdbSource) GetAllForum(currentPage int) interface{} {
+	return GetAllForum(currentPage)
 }
 
-func (mdbSource) GetUserById(id string) []byte {
-	panic("implement me")
+func (MdbSource) GetAllUser(currentPage int) interface{}{
+	return GetAllUser(currentPage)
 }
 
-func (mdbSource) GetUserContributeById(id string) []byte {
-	panic("implement me")
+func (MdbSource) GetUserById(id int) interface{} {
+	return GetUserById(id)
 }
 
-func (mdbSource) GetAllUserContribute() func() []string {
-	panic("implement me")
+func (MdbSource) GetUserContributeById(id int) interface{} {
+	return GetUserContributeById(id)
 }
 
-func (mdbSource) GetIdolById(id string) []byte {
-	panic("implement me")
+func (MdbSource) GetAllUserContribute(currentPage int) interface{} {
+	return GetAllUserContribute(currentPage)
 }
 
-func (mdbSource) GetAllIdol() []byte {
-	panic("implement me")
+func (MdbSource) GetIdolById(id int) interface{} {
+	return GetIdolById(id)
+}
+
+func (MdbSource) GetAllIdol() interface{} {
+	return GetAllIdol()
 }

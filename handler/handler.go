@@ -48,16 +48,32 @@ func Relay(c *gin.Context) {
 // @Accept  json
 // @Produce  json
 // @Param   id     path    int     true        "Idol ID"
+// @Param	page	query	int     true        "page number"
 // @Success 200 {string} string	"ok"
 // @Security ApiKeyAuth
 // @Router /forum/count/{id} [get]
 func ForumCount(c *gin.Context) {
-	id := c.Param("id")
-	result := dao.GetForumCount(id)
-	c.JSON(200, gin.H{
-		"idol_id": id,
-		"result":  result,
-	})
+	id := ParamId(c)
+	page := QueryPage(c)
+	result := dao.GetForumCount(id, page)
+	c.JSON(200, result)
+}
+
+
+// @Summary forum count
+// @Description get string by ID
+// @Tags forums
+// @Accept  json
+// @Produce  json
+// @Param   id     path    int     true        "Idol ID"
+// @Param	page	query	int     true        "page number"
+// @Success 200 {string} string	"ok"
+// @Security ApiKeyAuth
+// @Router /forum/count/{id} [get]
+func AllIdolForumCount(c *gin.Context) {
+	page := QueryPage(c)
+	result := dao.GetAllIdolForumCount(page)
+	c.JSON(200, result)
 }
 
 // @Summary forum count
@@ -70,12 +86,10 @@ func ForumCount(c *gin.Context) {
 // @Security ApiKeyAuth
 // @Router /idol/fans-num/{id} [get]
 func FansNum(c *gin.Context) {
-	id := c.Param("id")
-	result := dao.GetFansNumById(id)
-	c.JSON(200, gin.H{
-		"idol_id": id,
-		"result":  result,
-	})
+	id := ParamId(c)
+	page := QueryPage(c)
+	result := dao.GetFansNumById(id, page)
+	c.JSON(200, result)
 
 }
 
@@ -89,12 +103,10 @@ func FansNum(c *gin.Context) {
 // @Security ApiKeyAuth
 // @Router /idol/popular-num/{id} [get]
 func PopularNum(c *gin.Context) {
-	id := c.Param("id")
-	result := dao.GetPopularNumById(id)
-	c.JSON(200, gin.H{
-		"idol_id": id,
-		"result":  result,
-	})
+	id := ParamId(c)
+	page := QueryPage(c)
+	result := dao.GetPopularNumById(id, page)
+	c.JSON(200, result)
 }
 
 // @Summary all idol meta
@@ -106,7 +118,8 @@ func PopularNum(c *gin.Context) {
 // @Security ApiKeyAuth
 // @Router /idol/meta [get]
 func AllIdolMeta(c *gin.Context) {
-	result := dao.GetAllIdolMeta()
+	page := QueryPage(c)
+	result := dao.GetAllIdolMeta(page)
 	c.JSON(200, result)
 }
 
@@ -115,13 +128,30 @@ func AllIdolMeta(c *gin.Context) {
 // @Tags idols
 // @Accept  json
 // @Produce  json
-// @Param   id     path    int     true        "Idol ID"
+// @Param	id		path	int     true        "Idol ID"
+// @Param	page	query	int     true        "page number"
 // @Success 200 {string} string	"ok"
 // @Security ApiKeyAuth
 // @Router /idol/meta/{id} [get]
 func IdolMeta(c *gin.Context) {
-	id := c.Param("id")
-	result := dao.GetIdolMetaById(id)
+	id := ParamId(c)
+	page := QueryPage(c)
+	result := dao.GetIdolMetaById(id, page)
+	c.JSON(200, result)
+}
+
+// @Summary Add a new pet to the store
+// @Description get string by ID
+// @Tags forums
+// @Accept  json
+// @Produce  json
+// @Param	page	query	int     true        "page number"
+// @Success 200 {string} string	"ok"
+// @Security ApiKeyAuth
+// @Router /forum [get]
+func AllForum(c *gin.Context) {
+	page := QueryPage(c)
+	result := dao.GetAllForum(page)
 	c.JSON(200, result)
 }
 
@@ -132,12 +162,12 @@ func IdolMeta(c *gin.Context) {
 // @Produce  json
 // @Param   id     path    int     true        "Forum ID"
 // @Success 200 {string} string	"ok"
-// @Router /forum/detail/{id} [get]
 // @Security ApiKeyAuth
+// @Router /forum/detail/{id} [get]
 func ForumDetail(c *gin.Context) {
-	id := c.Param("id")
-	data := dao.GetForumById(id)
-	c.Data(200, "application/json", data)
+	id := ParamId(c)
+	result := dao.GetForumById(id)
+	c.JSON(200, result)
 }
 
 // @Summary user detail
@@ -150,9 +180,9 @@ func ForumDetail(c *gin.Context) {
 // @Security ApiKeyAuth
 // @Router /user/detail/{id} [get]
 func UserDetail(c *gin.Context) {
-	id := c.Param("id")
-	data := dao.GetUserById(id)
-	c.Data(200, "application/json", data)
+	id := ParamId(c)
+	result := dao.GetUserById(id)
+	c.JSON(200, result)
 }
 
 // @Summary user contribute
@@ -165,9 +195,9 @@ func UserDetail(c *gin.Context) {
 // @Security ApiKeyAuth
 // @Router /user/contribute/{id} [get]
 func UserContribute(c *gin.Context) {
-	id := c.Param("id")
-	data := dao.GetUserContributeById(id)
-	c.Data(200, "application/json", data)
+	id := ParamId(c)
+	result := dao.GetUserContributeById(id)
+	c.JSON(200, result)
 }
 
 // @Summary idol detail
@@ -180,9 +210,9 @@ func UserContribute(c *gin.Context) {
 // @Security ApiKeyAuth
 // @Router /idol/detail/{id} [get]
 func IdolDetail(c *gin.Context) {
-	id := c.Param("id")
-	data := dao.GetIdolById(id)
-	c.Data(200, "application/json", data)
+	id := ParamId(c)
+	result := dao.GetIdolById(id)
+	c.JSON(200, result)
 }
 
 // @Summary all idol detail
@@ -194,6 +224,6 @@ func IdolDetail(c *gin.Context) {
 // @Security ApiKeyAuth
 // @Router /idol/detail [get]
 func IdolList(c *gin.Context) {
-	data := dao.GetAllIdol()
-	c.Data(200, "application/json", data)
+	result := dao.GetAllIdol()
+	c.JSON(200, result)
 }

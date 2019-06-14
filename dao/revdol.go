@@ -1,63 +1,64 @@
 package dao
 
 import (
-	"revdol/dao/redisSource"
+	"revdol/dao/Interface"
+	"revdol/dao/mongo"
 )
 
-var dbSource Interface
+var source Interface.Revdol = mongo.New()
 
-func init() {
-	dbSource = redisSource.DB
+func GetForumCount(id int, page int) interface{} {
+	return source.GetForumCount(id, page)
 }
 
-func GetForumCount(id string) interface{} {
-	return dbSource.GetForumCount(id)
+func GetAllIdolForumCount(page int) interface{} {
+	return source.GetAllIdolForumCount(page)
 }
 
-func GetFansNumById(id string) interface{} {
-	return dbSource.GetFansNumById(id)
+func GetFansNumById(id, page int) interface{} {
+	return source.GetFansNumById(id, page)
 }
 
-func GetPopularNumById(id string) interface{} {
-	return dbSource.GetPopularNumById(id)
+func GetPopularNumById(id, page int) interface{} {
+	return source.GetPopularNumById(id, page)
 }
 
-func GetAllIdolMeta() interface{} {
-	return dbSource.GetAllIdolMeta()
+func GetAllIdolMeta(currentPage int) interface{} {
+	return source.GetAllIdolMeta(currentPage)
 }
 
-func GetIdolMetaById(id string) interface{} {
-	return dbSource.GetIdolMetaById(id)
+func GetIdolMetaById(id, page int) interface{} {
+	return source.GetIdolMetaById(id, page)
 }
 
-func GetForumById(id string) []byte {
-	return dbSource.GetForumById(id)
+func GetForumById(id int) interface{} {
+	return source.GetForumById(id)
 }
 
-func GetAllForum() []string {
-	return dbSource.GetAllForum()
+func GetAllForum(currentPage int) interface{} {
+	return source.GetAllForum(currentPage)
 }
 
-func GetAllUser() []string {
-	return dbSource.GetAllUser()
+func GetAllUser(currentPage int) interface{} {
+	return source.GetAllUser(currentPage)
 }
 
-func GetUserById(id string) []byte {
-	return dbSource.GetUserById(id)
+func GetUserById(id int) interface{} {
+	return source.GetUserById(id)
 }
 
-func GetUserContributeById(id string) []byte {
-	return dbSource.GetUserContributeById(id)
+func GetUserContributeById(id int) interface{} {
+	return source.GetUserContributeById(id)
 }
 
-func GetAllUserContribute() func() []string {
-	return dbSource.GetAllUserContribute()
+func GetAllUserContribute(currentPage int) interface{} {
+	return source.GetAllUserContribute(currentPage)
 }
 
-func GetIdolById(id string) []byte {
-	return dbSource.GetIdolById(id)
+func GetIdolById(id int) interface{} {
+	return source.GetIdolById(id)
 }
 
-func GetAllIdol() []byte {
-	return dbSource.GetAllIdol()
+func GetAllIdol() interface{} {
+	return source.GetAllIdol()
 }

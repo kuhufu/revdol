@@ -1,8 +1,9 @@
-package gormSource
+package gorm
 
 import (
 	"fmt"
 	"log"
+	"revdol/dao"
 	"revdol/model"
 	"testing"
 )
@@ -24,7 +25,9 @@ func TestGetAccountById(t *testing.T) {
 }
 
 func TestRemoveAccount(t *testing.T) {
-	RemoveAccount(&model.Account{ID: 1})
+	a := &model.Account{}
+	a.ID = 1
+	RemoveAccount(a)
 	if a, err := GetAccountById(1); err == nil {
 		t.Fatal(a)
 	}
@@ -32,10 +35,33 @@ func TestRemoveAccount(t *testing.T) {
 
 func TestGetAccountByEmail2(t *testing.T) {
 	a := &model.Account{Username:"kuhufu"}
-	DB.First(&a)
+	db.First(&a)
 	fmt.Println(a)
 }
 
 func TestGetAccountByEmail3(t *testing.T) {
 
+}
+
+func TestRegister(t *testing.T) {
+	account, err := dao.Register(&model.Account{Username: "user1"})
+	if err != nil {
+		log.Println(err)
+	}
+
+	log.Println(account)
+}
+
+func TestLogin(t *testing.T) {
+
+	account, err := dao.Login("kuhufu", "1111")
+	if err != nil {
+		log.Println(err)
+	}
+	log.Println(account)
+}
+
+func TestChangePassword(t *testing.T) {
+	account, _ := dao.ChangePassword(1, "2222")
+	log.Println(account)
 }

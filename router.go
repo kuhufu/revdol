@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"revdol/handler"
 	"revdol/middleware/auth"
@@ -36,8 +35,10 @@ func router(r *gin.Engine) {
 	{
 		forum := v2.Group("/forum")
 		{
+			forum.GET("", handler.AllForum)
 			forum.GET("/detail/:id", handler.ForumDetail)
 			forum.GET("/count/:id", handler.ForumCount)
+			forum.GET("/count", handler.AllIdolForumCount)
 		}
 
 		idol := v2.Group("/idol")

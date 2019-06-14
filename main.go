@@ -19,6 +19,9 @@ func init() {
 	if Config.Gin.Release {
 		gin.SetMode(gin.ReleaseMode)
 	}
+	if Config.Gin.Color{
+		gin.ForceConsoleColor()
+	}
 }
 
 // @title Swagger revdol API

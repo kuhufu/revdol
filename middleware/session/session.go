@@ -18,7 +18,7 @@ func ByteSession(sname string) gin.HandlerFunc {
 }
 
 func RedisSession(sname string) gin.HandlerFunc {
-	store, err := redis.NewStore(10, "tcp", "127.0.0.1:7001", "", []byte("redisSource"))
+	store, err := redis.NewStore(10, "tcp", "127.0.0.1:7001", "", []byte("redis"))
 	if err != nil {
 		log.Fatal(err)
 	}

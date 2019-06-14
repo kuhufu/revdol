@@ -3,9 +3,9 @@ package model
 import "time"
 
 type Idol struct {
-	JsonContent string `gormSource:"type:json"`
+	JsonContent string `gorm:"type:json"`
 
-	ID                  uint      `json:"id" gormSource:"primary_key"`
+	ID                  uint      `json:"id" gorm:"primary_key"`
 	PopularNum          int       `json:"popular_num"`
 	FansNum             int       `json:"fans_num"`
 	AttentionNum        int       `json:"attention_num"`

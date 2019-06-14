@@ -1,6 +1,10 @@
 
 gin:
   release: false
+  color: true
+
+config:
+  print: true
 
 mongo:
   url: "mongodb://localhost:27017"

@@ -4,7 +4,7 @@ import (
 	jwt "github.com/appleboy/gin-jwt"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"revdol/dao/gormSource"
+	"revdol/dao/gorm"
 	"revdol/middleware/casbin"
 	"revdol/model"
 	"time"
@@ -20,7 +20,7 @@ var Mw, _ = jwt.New(&jwt.GinJWTMiddleware{
 	IdentityKey:  identityKey,
 	SendCookie:   true,
 	SecureCookie: true,
-	//CookieHTTPOnly: true,
+	CookieHTTPOnly: true,
 
 	// 1. 登录时会调用，返回的是可以添加到 payload 数据
 	Authenticator: func(c *gin.Context) (interface{}, error) {
@@ -58,7 +58,7 @@ var Mw, _ = jwt.New(&jwt.GinJWTMiddleware{
 	// true	 表示授权成功，将会调用 router handler
 	// false 表示授权失败，将会调用 Unauthorized
 	Authorizator: func(identity interface{}, c *gin.Context) bool {
-		account, err := gormSource.GetAccountById(identity.(uint))
+		account, err := gorm.GetAccountById(identity.(uint))
 		if err != nil {
 			return false
 		}

@@ -3,7 +3,7 @@ package auth
 import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"revdol/dao/gormSource"
+	"revdol/dao/gorm"
 	"time"
 )
 
@@ -31,7 +31,7 @@ func Auth(c *gin.Context)  {
 		return
 	}
 
-	account, _ := gormSource.GetAccountById(uid.(uint))
+	account, _ := gorm.GetAccountById(uid.(uint))
 	c.Set("user", account)
 	c.Next()
 }

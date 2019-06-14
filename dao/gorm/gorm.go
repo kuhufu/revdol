@@ -1,4 +1,4 @@
-package gormSource
+package gorm
 
 import (
 	"errors"
@@ -10,26 +10,32 @@ import (
 	"revdol/model"
 )
 
-var DB *gorm.DB
+var db *gorm.DB
+
+const (
+	User  = "user"
+	Admin = "admin"
+	Root  = "root"
+)
 
 func init() {
 	var err error
-	DB, err = gorm.Open(Config.Gorm.Provider, Config.Gorm.URL)
+	db, err = gorm.Open(Config.Gorm.Provider, Config.Gorm.URL)
 	//Gorm, err = gorm.Open("mysql", "root:7266@/revdol?charset=utf8mb4&parseTime=True&loc=Local")
 	if err != nil {
 		log.Println(err)
 		os.Exit(2)
 	}
 
-	DB.LogMode(Config.Gorm.Log)
+	db.LogMode(Config.Gorm.Log)
 
-	DB.AutoMigrate(&model.Account{})
-	DB.AutoMigrate(&model.User{}, &model.Forum{}, &model.Idol{}, &model.Contribute{})
+	db.AutoMigrate(&model.Account{})
+	db.AutoMigrate(&model.User{}, &model.Forum{}, &model.Idol{}, &model.Contribute{})
 }
 
 func GetAccountByEmail(email string) (*model.Account, error) {
 	a := &model.Account{}
-	if notFount := DB.Where("email = ?", email).First(a).RecordNotFound(); notFount {
+	if notFount := db.Where("email = ?", email).First(a).RecordNotFound(); notFount {
 		return nil, errors.New("account not exist")
 	}
 	return a,nil
@@ -40,12 +46,50 @@ func GetAccountById(id uint) (*model.Account, error) {
 	a.ID = id
 
 
-	if notFound := DB.First(a).RecordNotFound(); notFound {
+	if notFound := db.First(a).RecordNotFound(); notFound {
 		return nil, errors.New("account not exist")
 	}
 	return a, nil
 }
 
 func RemoveAccount(account *model.Account) {
-	DB.Delete(account)
+	db.Delete(account)
+}
+
+func Register(account *model.Account) (*model.Account, error) {
+	pwd := ""
+	pwd, account.Password = account.Password, pwd
+
+	count := 0
+	if db.Model(account).Where(account).Count(&count); count != 0 {
+		return nil, errors.New("identity already exist")
+	}
+
+	account.Role = User
+	account.Password = pwd
+	db.Create(account)
+	return account, nil
+}
+
+func Login(identity, password string) (*model.Account, error) {
+	a := &model.Account{}
+	count := 0
+	db.Where("(username = ? or email = ?) AND password = ?", identity, identity, password).First(a).Count(&count)
+
+	if count == 0{
+		return nil, errors.New("wrong identity or password")
+	}
+
+	return a, nil
+}
+
+func ChangePassword(id uint, newPwd string) (*model.Account, error) {
+	a := &model.Account{}
+	a.ID = id
+	db.Model(a).UpdateColumns(model.Account{Password: newPwd}).First(a)
+	return a, nil
+}
+
+func AccountExists(account *model.Account) bool {
+	return false
 }

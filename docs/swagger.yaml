@@ -13,6 +13,29 @@ info:
   title: Swagger revdol API
   version: "1.0"
 paths:
+  /forum:
+    get:
+      consumes:
+      - application/json
+      description: get string by ID
+      parameters:
+      - description: page number
+        in: query
+        name: page
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Add a new pet to the store
+      tags:
+      - forums
   /forum/count/{id}:
     get:
       consumes:
@@ -22,6 +45,11 @@ paths:
       - description: Idol ID
         in: path
         name: id
+        required: true
+        type: integer
+      - description: page number
+        in: query
+        name: page
         required: true
         type: integer
       produces:
@@ -148,6 +176,11 @@ paths:
       - description: Idol ID
         in: path
         name: id
+        required: true
+        type: integer
+      - description: page number
+        in: query
+        name: page
         required: true
         type: integer
       produces:

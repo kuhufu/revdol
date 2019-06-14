@@ -6,24 +6,37 @@ import (
 	"fmt"
 	"github.com/jinzhu/configor"
 	"github.com/tidwall/pretty"
+	"log"
 )
 
 func init() {
-	configor.Load(&Config, "config/config.yaml")
+	err := configor.Load(&Config, "config/config.yaml")
 
-	bf := bytes.NewBuffer([]byte{})
-	enc := json.NewEncoder(bf)
-	enc.SetEscapeHTML(false)
-	enc.Encode(Config)
-	bs := pretty.Pretty(bf.Bytes())
-	fmt.Println(string(bs))
+	if err != nil {
+		log.Println("load config failure")
+		return
+	}
+
+	if Config.Config.Print {
+		bf := bytes.NewBuffer([]byte{})
+		enc := json.NewEncoder(bf)
+		enc.SetEscapeHTML(false)
+		enc.Encode(Config)
+		bs := pretty.Pretty(bf.Bytes())
+		fmt.Println(string(bs))
+	}
 }
 
 var Config = struct {
 	APPName string `default:"revdol"`
 
+	Config struct{
+		Print bool `default:"false"`
+	}
+
 	Gin struct {
 		Release bool `default:"false" json:"release"`
+		Color bool `default:"false" json:"color"`
 	} `json:"gin"`
 
 	Mongo struct {
