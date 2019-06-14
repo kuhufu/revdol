@@ -13,13 +13,13 @@ import (
 var identityKey = "uid"
 
 var Mw, _ = jwt.New(&jwt.GinJWTMiddleware{
-	Realm:        "test zone",
-	Key:          []byte("secret key"),
-	Timeout:      2 * time.Hour,
-	MaxRefresh:   time.Minute,
-	IdentityKey:  identityKey,
-	SendCookie:   true,
-	SecureCookie: true,
+	Realm:          "test zone",
+	Key:            []byte("secret key"),
+	Timeout:        2 * time.Hour,
+	MaxRefresh:     time.Minute,
+	IdentityKey:    identityKey,
+	SendCookie:     true,
+	SecureCookie:   true,
 	CookieHTTPOnly: true,
 
 	// 1. 登录时会调用，返回的是可以添加到 payload 数据

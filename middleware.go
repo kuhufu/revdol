@@ -8,9 +8,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/unrolled/secure"
 	"log"
-	"revdol/config"
+	. "revdol/config"
 )
-
 
 func Session() gin.HandlerFunc {
 	//store := cookie.NewStore([]byte("secret"))
@@ -26,8 +25,8 @@ func Secure() gin.HandlerFunc {
 	secureMiddleware := secure.New(secure.Options{
 		FrameDeny:     true,
 		SSLRedirect:   true,
-		SSLHost:       "localhost" + config.Config.HttpsPort,
-		IsDevelopment: true, //开发模式下，这些设置都会被忽略
+		SSLHost:       "localhost" + Config.Https_port,
+		IsDevelopment: Config.Dev, //开发模式下，这些设置都会被忽略
 	})
 
 	return func(c *gin.Context) {
@@ -54,6 +53,6 @@ func CacheControl() gin.HandlerFunc {
 	}
 }
 
-func Gzip() gin.HandlerFunc{
+func Gzip() gin.HandlerFunc {
 	return gzip.Gzip(gzip.DefaultCompression)
 }

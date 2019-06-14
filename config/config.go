@@ -30,13 +30,15 @@ func init() {
 var Config = struct {
 	APPName string `default:"revdol"`
 
-	Config struct{
+	Dev bool `default:"true"`
+
+	Config struct {
 		Print bool `default:"false"`
-	}
+	} `json:"config"`
 
 	Gin struct {
 		Release bool `default:"false" json:"release"`
-		Color bool `default:"false" json:"color"`
+		Color   bool `default:"false" json:"color"`
 	} `json:"gin"`
 
 	Mongo struct {
@@ -56,6 +58,7 @@ var Config = struct {
 	Etcd struct {
 		URL string
 	} `json:"etcd"`
+
 	Casbin struct {
 		Model  string `required:"true"`
 		Policy string `required:"true"`
@@ -66,6 +69,6 @@ var Config = struct {
 		Key  string `required:"true" json:"key_file"`
 	} `json:"cert"`
 
-	HttpPort  string `default:":80" json:"http_port"`
-	HttpsPort string `default:":443" json:"https_port"`
+	Http_port  string `default:":80" json:"http_port"`
+	Https_port string `default:":443" json:"https_port"`
 }{}

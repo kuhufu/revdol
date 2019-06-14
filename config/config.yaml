@@ -1,6 +1,8 @@
 
+dev: false
+
 gin:
-  release: false
+  release: true
   color: true
 
 config:
@@ -29,4 +31,4 @@ cert:
   key: "cert/private_key"
 
 http_port: ":1080"
-https_port: ":443"
+https_port: ":8443"

@@ -12,14 +12,14 @@ import (
 )
 
 func init() {
-	flag.StringVar(&Config.HttpPort, "p", Config.HttpPort, "http port")
-	flag.StringVar(&Config.HttpsPort, "s", Config.HttpsPort, "http port")
+	flag.StringVar(&Config.Http_port, "p", Config.Http_port, "http port")
+	flag.StringVar(&Config.Https_port, "s", Config.Https_port, "http port")
 	flag.Parse()
 
 	if Config.Gin.Release {
 		gin.SetMode(gin.ReleaseMode)
 	}
-	if Config.Gin.Color{
+	if Config.Gin.Color {
 		gin.ForceConsoleColor()
 	}
 }
@@ -40,7 +40,6 @@ func init() {
 // @in header
 // @name Authorization
 
-
 // @schemes http https
 // @Security ApiKeyAuth
 
@@ -52,7 +51,7 @@ func main() {
 	r := gin.Default()
 
 	config := &ginSwagger.Config{
-		URL: fmt.Sprintf("http://localhost%v/swagger/doc.json", Config.HttpPort),
+		URL: fmt.Sprintf("http://localhost%v/swagger/doc.json", Config.Http_port),
 	}
 	r.GET("/swagger/*any", ginSwagger.CustomWrapHandler(config, swaggerFiles.Handler))
 
@@ -60,12 +59,12 @@ func main() {
 
 	// HTTP
 	go func() {
-		log.Fatal(r.Run(Config.HttpPort))
+		log.Fatal(r.Run(Config.Http_port))
 	}()
 
 	// HTTPS
 	cert, key := certPath()
-	log.Fatal(r.RunTLS(Config.HttpsPort, cert, key))
+	log.Fatal(r.RunTLS(Config.Https_port, cert, key))
 }
 
 func certPath() (cert, key string) {
