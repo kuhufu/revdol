@@ -17,7 +17,6 @@ var idolNum int64 = 6
 func init() {
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(Config.Mongo.URL))
-	//client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:27017"))
 	if err != nil {
 		log.Println(err)
 		return
@@ -51,8 +50,8 @@ func GetAllIdolForumCount(currentPage int) interface{} {
 		bson.M{},
 		&options.FindOptions{
 			Sort: bson.M{
-				"date":    -1,
-				"count":   -1,
+				"date":  -1,
+				"count": -1,
 			},
 			Skip:  &skip,
 			Limit: &perPage,
@@ -211,7 +210,7 @@ func GetAllUser(currentPage int) interface{} {
 func GetUserById(id int) interface{} {
 	res := mdb.Collection("users").FindOne(
 		context.TODO(),
-		bson.M{"id": id}, )
+		bson.M{"id": id})
 
 	return one(res)
 }
