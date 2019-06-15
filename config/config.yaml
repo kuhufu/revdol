@@ -1,12 +1,14 @@
 
-dev: false
+appname: "revdol"
+
+dev: true
 
 gin:
-  release: true
+  release: false
   color: true
 
 config:
-  print: true
+  print: false
 
 mongo:
   url: "mongodb://localhost:27017"
@@ -27,8 +29,8 @@ casbin:
   policy: "middleware/casbin/policy.csv"
 
 cert:
-  cert: "cert/test_cert.pem"
-  key: "cert/private_key"
+  cert_file: "cert/test_cert.pem"
+  key_file: "cert/private_key"
 
-http_port: ":1080"
-https_port: ":8443"
+http_port: ":80"
+https_port: ":443"

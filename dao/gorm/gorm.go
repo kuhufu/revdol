@@ -27,7 +27,7 @@ func init() {
 		os.Exit(2)
 	}
 
-	db.LogMode(Config.Gorm.Log)
+	db.LogMode(Config.Gorm.LogMode)
 
 	db.AutoMigrate(&model.Account{})
 	db.AutoMigrate(&model.User{}, &model.Forum{}, &model.Idol{}, &model.Contribute{})
@@ -38,13 +38,12 @@ func GetAccountByEmail(email string) (*model.Account, error) {
 	if notFount := db.Where("email = ?", email).First(a).RecordNotFound(); notFount {
 		return nil, errors.New("account not exist")
 	}
-	return a,nil
+	return a, nil
 }
 
 func GetAccountById(id uint) (*model.Account, error) {
 	a := &model.Account{}
 	a.ID = id
-
 
 	if notFound := db.First(a).RecordNotFound(); notFound {
 		return nil, errors.New("account not exist")
@@ -76,7 +75,7 @@ func Login(identity, password string) (*model.Account, error) {
 	count := 0
 	db.Where("(username = ? or email = ?) AND password = ?", identity, identity, password).First(a).Count(&count)
 
-	if count == 0{
+	if count == 0 {
 		return nil, errors.New("wrong identity or password")
 	}
 

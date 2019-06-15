@@ -16,7 +16,6 @@ func init() {
 		log.Println("load config failure")
 		return
 	}
-
 	if Config.Config.Print {
 		bf := bytes.NewBuffer([]byte{})
 		enc := json.NewEncoder(bf)
@@ -28,9 +27,9 @@ func init() {
 }
 
 var Config = struct {
-	APPName string `default:"revdol"`
+	APPName string
 
-	Dev bool `default:"true"`
+	Dev bool `default:"false"`
 
 	Config struct {
 		Print bool `default:"false"`
@@ -42,7 +41,7 @@ var Config = struct {
 	} `json:"gin"`
 
 	Mongo struct {
-		URL string `json:"url"`
+		URL string `required:"true" json:"url"`
 	} `json:"mongo"`
 
 	Redis struct {
@@ -50,7 +49,7 @@ var Config = struct {
 	} `json:"redis"`
 
 	Gorm struct {
-		Log      bool   `default:"false" json:"log_mode"`
+		LogMode  bool   `default:"false" json:"log_mode" yaml:"log_mode"`
 		Provider string `required:"true" json:"provider"`
 		URL      string `required:"true" json:"url"`
 	} `json:"gorm"`
@@ -65,10 +64,10 @@ var Config = struct {
 	} `json:"casbin"`
 
 	Cert struct {
-		Cert string `required:"true" json:"cert_file"`
-		Key  string `required:"true" json:"key_file"`
+		CertFile string `required:"true" json:"cert_file" yaml:"cert_file"`
+		KeyFile  string `required:"true" json:"key_file" yaml:"key_file"`
 	} `json:"cert"`
 
-	Http_port  string `default:":80" json:"http_port"`
-	Https_port string `default:":443" json:"https_port"`
+	HttpPort  string `default:":80" json:"http_port" yaml:"http_port"`
+	HttpsPort string `default:":443" json:"https_port" yaml:"https_port"`
 }{}

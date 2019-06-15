@@ -25,7 +25,7 @@ func Secure() gin.HandlerFunc {
 	secureMiddleware := secure.New(secure.Options{
 		FrameDeny:     true,
 		SSLRedirect:   true,
-		SSLHost:       "localhost" + Config.Https_port,
+		SSLHost:       "localhost" + Config.HttpsPort,
 		IsDevelopment: Config.Dev, //开发模式下，这些设置都会被忽略
 	})
 
