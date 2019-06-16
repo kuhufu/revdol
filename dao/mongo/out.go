@@ -49,9 +49,9 @@ func GetAllIdolForumCount(currentPage int) interface{} {
 	cursor, err := mdb.Collection("idols_forum_count").Find(context.TODO(),
 		bson.M{},
 		&options.FindOptions{
-			Sort: bson.M{
-				"date":  -1,
-				"count": -1,
+			Sort: bson.D{
+				{"date", -1},
+				{"count", -1},
 			},
 			Skip:  &skip,
 			Limit: &perPage,
@@ -113,7 +113,10 @@ func GetAllIdolMeta(currentPage int) interface{} {
 	cursor, err := mdb.Collection("idols_meta").Find(context.TODO(),
 		bson.M{},
 		&options.FindOptions{
-			Sort:  bson.M{"date": -1, "id": 1},
+			Sort: bson.D{
+				{"date", -1},
+				{"id", 1},
+			},
 			Skip:  &skip,
 			Limit: &perPage,
 			Projection: bson.M{
@@ -259,7 +262,6 @@ func many(cursor *mongo.Cursor, err error) interface{} {
 		return nil
 	}
 	var result []bson.M
-	//ctx, _ := context.WithTimeout(context.TODO(), time.Millisecond*100)
 	err = cursor.All(context.TODO(), &result)
 	if err != nil {
 		log.Println(err)
