@@ -2,9 +2,9 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/kuhufu/revdol/dao"
 	"io/ioutil"
 	"net/http"
-	"revdol/dao"
 )
 
 const HostURL = "https://starmicro.happyelements.cn"
@@ -58,7 +58,6 @@ func ForumCount(c *gin.Context) {
 	result := dao.GetForumCount(id, page)
 	c.JSON(200, result)
 }
-
 
 // @Summary forum count
 // @Description get string by ID

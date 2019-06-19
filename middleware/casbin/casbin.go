@@ -2,35 +2,35 @@ package casbin
 
 import (
 	"github.com/casbin/casbin"
-	gormadapter "github.com/casbin/gorm-adapter"
 	"github.com/gin-gonic/gin"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	etcdwatcher "github.com/kuhufu/etcd3-watcher"
+	. "github.com/kuhufu/revdol/config"
+	"github.com/kuhufu/revdol/model"
 	"log"
-	. "revdol/config"
-	"revdol/model"
 	"time"
 )
 
-var fileEnforce *casbin.SyncedEnforcer
-var dbEnforce *casbin.SyncedEnforcer
+var enforcer *casbin.SyncedEnforcer
 
 func init() {
-	fileEnforce = casbin.NewSyncedEnforcer(Config.Casbin.Model, Config.Casbin.Policy)
-	fileEnforce.StartAutoLoadPolicy(time.Second * 30)
+	enforcer = casbin.NewSyncedEnforcer(Config.Casbin.Model, Config.Casbin.Policy)
+	enforcer.StartAutoLoadPolicy(time.Second * 30)
+
+	if Config.Etcd.URL == "" {
+		return
+	}
 	w := etcdwatcher.NewWatcher(Config.Etcd.URL)
-	fileEnforce.SetWatcher(w)
+	enforcer.SetWatcher(w)
+
 	w.SetUpdateCallback(func(s string) {
-		fileEnforce.LoadPolicy()
+		enforcer.LoadPolicy()
 		log.Println("New Revision detected:", s)
 	})
-
-	dbEnforce = casbin.NewSyncedEnforcer(Config.Casbin.Model, gormadapter.NewAdapter("mysql", "kuhufu:12345@tcp(127.0.0.1:3306)/"))
-	dbEnforce.StartAutoLoadPolicy(time.Second * 30)
 }
 
 func GetEnforce() *casbin.SyncedEnforcer {
-	return fileEnforce
+	return enforcer
 }
 
 func Check(c *gin.Context) bool {

@@ -3,10 +3,10 @@ package handler
 import (
 	jwt "github.com/appleboy/gin-jwt"
 	"github.com/gin-gonic/gin"
+	"github.com/kuhufu/revdol/dao"
+	"github.com/kuhufu/revdol/middleware/auth"
+	"github.com/kuhufu/revdol/model"
 	"net/http"
-	"revdol/dao"
-	"revdol/middleware/auth"
-	"revdol/model"
 	"time"
 )
 

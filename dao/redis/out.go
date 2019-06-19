@@ -4,13 +4,13 @@ import (
 	"encoding/json"
 	"github.com/gomodule/redigo/redis"
 	"github.com/kuhufu/flyredis"
+	. "github.com/kuhufu/revdol/config"
 	"log"
-	. "revdol/config"
 	"strconv"
 	"time"
 )
 
-var pool = 	flyredis.NewPool(&redis.Pool{
+var pool = flyredis.NewPool(&redis.Pool{
 	MaxIdle:     50,
 	MaxActive:   1000,
 	IdleTimeout: 30 * time.Second,
@@ -23,7 +23,6 @@ type ForumInfo struct {
 	Date  string `json:"date"`
 	Count int    `json:"count"`
 }
-
 
 func GetForumCount(id string) interface{} {
 	result, err := pool.HGETALL("statistics:forum_count:" + id).IntMap()

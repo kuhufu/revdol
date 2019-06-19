@@ -6,9 +6,9 @@ import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/redis"
 	"github.com/gin-gonic/gin"
+	. "github.com/kuhufu/revdol/config"
 	"github.com/unrolled/secure"
 	"log"
-	. "revdol/config"
 )
 
 func Session() gin.HandlerFunc {

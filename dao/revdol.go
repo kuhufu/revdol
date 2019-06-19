@@ -1,8 +1,8 @@
 package dao
 
 import (
-	"revdol/dao/Interface"
-	"revdol/dao/mongo"
+	"github.com/kuhufu/revdol/dao/Interface"
+	"github.com/kuhufu/revdol/dao/mongo"
 )
 
 var source Interface.Revdol = mongo.New()

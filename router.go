@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"revdol/handler"
-	"revdol/middleware/auth"
+	"github.com/kuhufu/revdol/handler"
+	"github.com/kuhufu/revdol/middleware/auth"
 )
 
 func router(r *gin.Engine) {

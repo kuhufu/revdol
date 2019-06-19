@@ -2,9 +2,9 @@ package gorm
 
 import (
 	"fmt"
+	"github.com/kuhufu/revdol/dao"
+	"github.com/kuhufu/revdol/model"
 	"log"
-	"revdol/dao"
-	"revdol/model"
 	"testing"
 )
 
@@ -34,7 +34,7 @@ func TestRemoveAccount(t *testing.T) {
 }
 
 func TestGetAccountByEmail2(t *testing.T) {
-	a := &model.Account{Username:"kuhufu"}
+	a := &model.Account{Username: "kuhufu"}
 	db.First(&a)
 	fmt.Println(a)
 }

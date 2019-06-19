@@ -1,6 +1,6 @@
 package Interface
 
-import "revdol/model"
+import "github.com/kuhufu/revdol/model"
 
 type Account interface {
 	Register(account *model.Account) (*model.Account, error)
@@ -25,7 +25,7 @@ type Revdol interface {
 	GetAllUser(currentPage int) interface{}
 	GetUserById(id int) interface{}
 	GetUserContributeById(id int) interface{}
-	GetAllUserContribute(currentPage int)interface{}
+	GetAllUserContribute(currentPage int) interface{}
 	GetIdolById(id int) interface{}
 	GetAllIdol() interface{}
 }

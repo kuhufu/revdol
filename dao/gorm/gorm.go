@@ -4,10 +4,9 @@ import (
 	"errors"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	. "github.com/kuhufu/revdol/config"
+	"github.com/kuhufu/revdol/model"
 	"log"
-	"os"
-	. "revdol/config"
-	"revdol/model"
 )
 
 var db *gorm.DB
@@ -21,10 +20,8 @@ const (
 func init() {
 	var err error
 	db, err = gorm.Open(Config.Gorm.Provider, Config.Gorm.URL)
-	//Gorm, err = gorm.Open("mysql", "root:7266@/revdol?charset=utf8mb4&parseTime=True&loc=Local")
 	if err != nil {
 		log.Println(err)
-		os.Exit(2)
 	}
 
 	db.LogMode(Config.Gorm.LogMode)

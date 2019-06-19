@@ -1,12 +1,12 @@
 package auth
 
 import (
-	jwt "github.com/appleboy/gin-jwt"
+	jwt "github.com/appleboy/gin-jwt/v2"
 	"github.com/gin-gonic/gin"
+	"github.com/kuhufu/revdol/dao/gorm"
+	"github.com/kuhufu/revdol/middleware/casbin"
+	"github.com/kuhufu/revdol/model"
 	"net/http"
-	"revdol/dao/gorm"
-	"revdol/middleware/casbin"
-	"revdol/model"
 	"time"
 )
 
@@ -24,7 +24,7 @@ var Mw, _ = jwt.New(&jwt.GinJWTMiddleware{
 
 	// 1. 登录时会调用，返回的是可以添加到 payload 数据
 	Authenticator: func(c *gin.Context) (interface{}, error) {
-		m, exists := c.Get("loginInfo");
+		m, exists := c.Get("loginInfo")
 		if !exists {
 			return nil, nil
 		}

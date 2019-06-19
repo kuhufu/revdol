@@ -1,8 +1,8 @@
 package dao
 
 import (
-	"revdol/dao/gorm"
-	"revdol/model"
+	"github.com/kuhufu/revdol/dao/gorm"
+	"github.com/kuhufu/revdol/model"
 )
 
 func Register(account *model.Account) (*model.Account, error) {

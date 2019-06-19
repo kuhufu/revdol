@@ -3,11 +3,11 @@ package auth
 import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"revdol/dao/gorm"
+	"github.com/kuhufu/revdol/dao/gorm"
 	"time"
 )
 
-func Auth(c *gin.Context)  {
+func Auth(c *gin.Context) {
 	if c.Request.URL.Path == "/login" {
 		c.Next()
 		return

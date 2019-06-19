@@ -2,11 +2,11 @@ package mongo
 
 import (
 	"context"
+	. "github.com/kuhufu/revdol/config"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
-	. "revdol/config"
 	"time"
 )
 

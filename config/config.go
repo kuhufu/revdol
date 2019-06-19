@@ -1,11 +1,8 @@
 package config
 
 import (
-	"bytes"
-	"encoding/json"
-	"fmt"
 	"github.com/jinzhu/configor"
-	"github.com/tidwall/pretty"
+	"github.com/kuhufu/revdol/util"
 	"log"
 )
 
@@ -17,12 +14,7 @@ func init() {
 		return
 	}
 	if Config.Config.Print {
-		bf := bytes.NewBuffer([]byte{})
-		enc := json.NewEncoder(bf)
-		enc.SetEscapeHTML(false)
-		enc.Encode(Config)
-		bs := pretty.Pretty(bf.Bytes())
-		fmt.Println(string(bs))
+		util.Pretty(Config)
 	}
 }
 

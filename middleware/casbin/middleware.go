@@ -2,7 +2,7 @@ package casbin
 
 import (
 	"github.com/gin-gonic/gin"
-	"revdol/model"
+	"github.com/kuhufu/revdol/model"
 )
 
 func Casbin(c *gin.Context) {
