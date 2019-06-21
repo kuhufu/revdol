@@ -22,12 +22,13 @@ func router(r *gin.Engine) {
 
 		account.GET("/login", handler.ServeFile("static/login.html"))
 		account.POST("/login", handler.Login)
+
 		account.GET("/logout", auth.Middleware, handler.Logout)
 
 		account.GET("/changepwd", auth.Middleware, handler.ServeFile("static/changepwd.html"))
 		account.POST("/changepwd", auth.Middleware, handler.ChangePassword)
 
-		account.GET("/info", handler.AccountInfo)
+		account.GET("/info", auth.Middleware, handler.AccountInfo)
 	}
 
 	v2 := r.Group("/v2")
@@ -37,8 +38,6 @@ func router(r *gin.Engine) {
 		{
 			forum.GET("", handler.AllForum)
 			forum.GET("/detail/:id", handler.ForumDetail)
-			forum.GET("/count/:id", handler.ForumCount)
-			forum.GET("/count", handler.AllIdolForumCount)
 		}
 
 		idol := v2.Group("/idol")
@@ -56,11 +55,18 @@ func router(r *gin.Engine) {
 			user.GET("/detail/:id", handler.UserDetail)
 			user.GET("/contribute/:id", handler.UserContribute)
 		}
-	}
 
-	v3 := r.Group("/v3")
-	v3.Use(auth.Middleware, CacheControl())
-	{
-		v3.GET("/forum/detail/:id", handler.ForumDetail)
+		count := v2.Group("/count")
+		{
+			count.GET("/forum/user/:id", handler.CountUserForum)
+			count.GET("/forum/idol", handler.CountAllIdolForum)
+			count.GET("/forum/idol/:id", handler.CountIdolForum)
+		}
+
+		search := v2.Group("/search")
+		{
+			search.GET("", handler.ServeFile("static/search.html"))
+			search.GET("/user", handler.SearchUser)
+		}
 	}
 }

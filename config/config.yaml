@@ -1,6 +1,6 @@
 
 appname: "revdol"
-
+#是否是开发模式
 dev: true
 
 gin:
@@ -8,6 +8,7 @@ gin:
   color: true
 
 config:
+  #是否在控制台打印配置
   print: false
 
 mongo:

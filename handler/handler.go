@@ -44,32 +44,31 @@ func Relay(c *gin.Context) {
 
 // @Summary forum count
 // @Description get string by ID
-// @Tags forums
+// @Tags count
 // @Accept  json
 // @Produce  json
 // @Param   id     path    int     true        "Idol ID"
 // @Param	page	query	int     true        "page number"
 // @Success 200 {string} string	"ok"
 // @Security ApiKeyAuth
-// @Router /forum/count/{id} [get]
-func ForumCount(c *gin.Context) {
+// @Router /count/forum/idol/{id} [get]
+func CountIdolForum(c *gin.Context) {
 	id := ParamId(c)
 	page := QueryPage(c)
-	result := dao.GetForumCount(id, page)
+	result := dao.GetIdolForumCount(id, page)
 	c.JSON(200, result)
 }
 
-// @Summary forum count
+// @Summary all idol forum count
 // @Description get string by ID
-// @Tags forums
+// @Tags count
 // @Accept  json
 // @Produce  json
-// @Param   id     path    int     true        "Idol ID"
-// @Param	page	query	int     true        "page number"
+// @Param	page	query	int		false	"page number"
 // @Success 200 {string} string	"ok"
 // @Security ApiKeyAuth
-// @Router /forum/count/{id} [get]
-func AllIdolForumCount(c *gin.Context) {
+// @Router /count/forum/idol [get]
+func CountAllIdolForum(c *gin.Context) {
 	page := QueryPage(c)
 	result := dao.GetAllIdolForumCount(page)
 	c.JSON(200, result)
@@ -80,7 +79,8 @@ func AllIdolForumCount(c *gin.Context) {
 // @Tags idols
 // @Accept  json
 // @Produce  json
-// @Param   id	path	int	true	"Idol ID"
+// @Param   id		path	int	true	"Idol ID"
+// @Param   page	query	int	page	"page number"
 // @Success 200 {string} string	"ok"
 // @Security ApiKeyAuth
 // @Router /idol/fans-num/{id} [get]
@@ -97,7 +97,8 @@ func FansNum(c *gin.Context) {
 // @Tags idols
 // @Accept  json
 // @Produce  json
-// @Param   id     path    int     true        "Idol ID"
+// @Param   id		path    int     true        "Idol ID"
+// @Param   page	query	int		false		"page number"
 // @Success 200 {string} string	"ok"
 // @Security ApiKeyAuth
 // @Router /idol/popular-num/{id} [get]
@@ -113,6 +114,7 @@ func PopularNum(c *gin.Context) {
 // @Tags idols
 // @Accept  json
 // @Produce  json
+// @Param   id     path    int     false        "page"
 // @Success 200 {string} string	"ok"
 // @Security ApiKeyAuth
 // @Router /idol/meta [get]
@@ -128,7 +130,7 @@ func AllIdolMeta(c *gin.Context) {
 // @Accept  json
 // @Produce  json
 // @Param	id		path	int     true        "Idol ID"
-// @Param	page	query	int     true        "page number"
+// @Param	page	query	int     false        "page number"
 // @Success 200 {string} string	"ok"
 // @Security ApiKeyAuth
 // @Router /idol/meta/{id} [get]
@@ -144,13 +146,36 @@ func IdolMeta(c *gin.Context) {
 // @Tags forums
 // @Accept  json
 // @Produce  json
-// @Param	page	query	int     true        "page number"
+// @Param	page		query	int     false        "page number"
+// @Param	user_id		path	int     false        "user id"
+// @Param	idol_id		path	int     false        "idol id"
 // @Success 200 {string} string	"ok"
 // @Security ApiKeyAuth
 // @Router /forum [get]
 func AllForum(c *gin.Context) {
+	params, err := ForumQueryParams(c)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	result := dao.GetAllForum(params)
+	c.JSON(200, result)
+}
+
+// @Summary Add a new pet to the store
+// @Description get string by ID
+// @Tags count
+// @Accept  json
+// @Produce  json
+// @Param	page	query	int     true        "page number"
+// @Param	id		path	int     true        "user id"
+// @Success 200 {string} string	"ok"
+// @Security ApiKeyAuth
+// @Router /count/forum/user/{id} [get]
+func CountUserForum(c *gin.Context) {
+	id := ParamId(c)
 	page := QueryPage(c)
-	result := dao.GetAllForum(page)
+	result := dao.GetUserForumCount(id, page)
 	c.JSON(200, result)
 }
 
@@ -224,5 +249,20 @@ func IdolDetail(c *gin.Context) {
 // @Router /idol/detail [get]
 func IdolList(c *gin.Context) {
 	result := dao.GetAllIdol()
+	c.JSON(200, result)
+}
+
+// @Summary search user
+// @Description search user
+// @Tags search
+// @Accept  json
+// @Produce  json
+// @Param   wd     query    string     true        "key word"
+// @Success 200 {string} string	"ok"
+// @Security ApiKeyAuth
+// @Router /search/user [get]
+func SearchUser(c *gin.Context) {
+	keyWord := c.Query("wd")
+	result := dao.SearchUser(keyWord)
 	c.JSON(200, result)
 }

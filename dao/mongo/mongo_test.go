@@ -22,7 +22,7 @@ func init() {
 }
 
 func TestGetForumCount(t *testing.T) {
-	res := GetForumCount(4, 1)
+	res := GetIdolForumCount(4, 1)
 	fmt.Println(res)
 }
 
@@ -45,5 +45,21 @@ func TestGetAllForum(t *testing.T) {
 	util.Pretty(res)
 }
 func TestGetPopularNumById(t *testing.T) {
+	res := GetPopularNumById(4, 1)
+	util.Pretty(res)
+}
 
+func TestSearchUser(t *testing.T) {
+	res := SearchUser("鱿鱼丝")
+	util.Pretty(res)
+}
+
+func TestGetUserForum(t *testing.T) {
+	res := GetUserForum(1001, 1)
+	util.Pretty(res)
+}
+
+func TestGetUserForumCount(t *testing.T) {
+	res := GetUserForumCount(1001, 1)
+	util.Pretty(res)
 }

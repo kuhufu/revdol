@@ -7,8 +7,8 @@ import (
 
 var source Interface.Revdol = mongo.New()
 
-func GetForumCount(id int, page int) interface{} {
-	return source.GetForumCount(id, page)
+func GetIdolForumCount(id int, page int) interface{} {
+	return source.GetIdolForumCount(id, page)
 }
 
 func GetAllIdolForumCount(page int) interface{} {
@@ -35,8 +35,12 @@ func GetForumById(id int) interface{} {
 	return source.GetForumById(id)
 }
 
-func GetAllForum(currentPage int) interface{} {
-	return source.GetAllForum(currentPage)
+func GetAllForum(params map[string]interface{}) interface{} {
+	return source.GetAllForum(params)
+}
+
+func GetUserForumCount(id, currentPage int) interface{} {
+	return source.GetUserForumCount(id, currentPage)
 }
 
 func GetAllUser(currentPage int) interface{} {
@@ -61,4 +65,8 @@ func GetIdolById(id int) interface{} {
 
 func GetAllIdol() interface{} {
 	return source.GetAllIdol()
+}
+
+func SearchUser(keyWord string) interface{} {
+	return source.SearchUser(keyWord)
 }

@@ -1,19 +1,30 @@
 package mongo
 
-
 type MdbSource int
+
+func (MdbSource) GetAllForum(params map[string]interface{}) interface{} {
+	return GetAllForum(params)
+}
 
 func New() MdbSource {
 	return MdbSource(0)
 }
 
-func (MdbSource) GetForumCount(id int, page int) interface{} {
-	return GetForumCount(id,  page)
+func (MdbSource) GetUserForumCount(id, currentPage int) interface{} {
+	return GetUserForumCount(id, currentPage)
 }
+
+func (MdbSource) SearchUser(keyWord string) interface{} {
+	return SearchUser(keyWord)
+}
+
+func (MdbSource) GetIdolForumCount(id int, page int) interface{} {
+	return GetIdolForumCount(id, page)
+}
+
 func (MdbSource) GetAllIdolForumCount(page int) interface{} {
 	return GetAllIdolForumCount(page)
 }
-
 func (MdbSource) GetFansNumById(id int, currentPage int) interface{} {
 	return GetFansNumById(id, currentPage)
 }
@@ -34,11 +45,7 @@ func (MdbSource) GetForumById(id int) interface{} {
 	return GetForumById(id)
 }
 
-func (MdbSource) GetAllForum(currentPage int) interface{} {
-	return GetAllForum(currentPage)
-}
-
-func (MdbSource) GetAllUser(currentPage int) interface{}{
+func (MdbSource) GetAllUser(currentPage int) interface{} {
 	return GetAllUser(currentPage)
 }
 

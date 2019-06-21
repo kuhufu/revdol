@@ -19,3 +19,21 @@ func ParamId(c *gin.Context) int {
 	id, _ := strconv.Atoi(i)
 	return id
 }
+
+func ForumQueryParams(c *gin.Context) (result map[string]interface{}, err error) {
+	result = map[string]interface{}{}
+	params := []string{"user_id", "idol_id", "page"}
+	for _, param := range params {
+		if value, exist := c.GetQuery(param); exist {
+			v, err := strconv.Atoi(value)
+			if err != nil {
+				return nil, err
+			}
+			result[param] = v
+		}
+	}
+	if _, ok := result["page"]; !ok {
+		result["page"] = 1
+	}
+	return
+}

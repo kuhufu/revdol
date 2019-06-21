@@ -10,10 +10,10 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   termsOfService: http://swagger.io/terms/
-  title: Swagger revdol API
+  title: EnableSwagger revdol API
   version: "1.0"
 paths:
-  /forum:
+  /count/forum/idol:
     get:
       consumes:
       - application/json
@@ -22,7 +22,6 @@ paths:
       - description: page number
         in: query
         name: page
-        required: true
         type: integer
       produces:
       - application/json
@@ -33,10 +32,10 @@ paths:
             type: string
       security:
       - ApiKeyAuth: []
-      summary: Add a new pet to the store
+      summary: all idol forum count
       tags:
-      - forums
-  /forum/count/{id}:
+      - count
+  /count/forum/idol/{id}:
     get:
       consumes:
       - application/json
@@ -62,6 +61,64 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: forum count
+      tags:
+      - count
+  /count/forum/user/{id}:
+    get:
+      consumes:
+      - application/json
+      description: get string by ID
+      parameters:
+      - description: page number
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: user id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Add a new pet to the store
+      tags:
+      - count
+  /forum:
+    get:
+      consumes:
+      - application/json
+      description: get string by ID
+      parameters:
+      - description: page number
+        in: query
+        name: page
+        type: integer
+      - description: user id
+        in: path
+        name: user_id
+        type: integer
+      - description: idol id
+        in: path
+        name: idol_id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Add a new pet to the store
       tags:
       - forums
   /forum/detail/{id}:
@@ -138,6 +195,10 @@ paths:
         name: id
         required: true
         type: integer
+      - description: page number
+        in: query
+        name: page
+        type: integer
       produces:
       - application/json
       responses:
@@ -155,6 +216,11 @@ paths:
       consumes:
       - application/json
       description: get meta of all idols
+      parameters:
+      - description: page
+        in: path
+        name: id
+        type: integer
       produces:
       - application/json
       responses:
@@ -181,7 +247,6 @@ paths:
       - description: page number
         in: query
         name: page
-        required: true
         type: integer
       produces:
       - application/json
@@ -206,6 +271,10 @@ paths:
         name: id
         required: true
         type: integer
+      - description: page number
+        in: query
+        name: page
+        type: integer
       produces:
       - application/json
       responses:
@@ -218,6 +287,29 @@ paths:
       summary: forum count
       tags:
       - idols
+  /search/user:
+    get:
+      consumes:
+      - application/json
+      description: search user
+      parameters:
+      - description: key word
+        in: query
+        name: wd
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: search user
+      tags:
+      - search
   /user/contribute/{id}:
     get:
       consumes:
@@ -265,8 +357,8 @@ paths:
       tags:
       - users
 schemes:
-- http
 - https
+- http
 securityDefinitions:
   ApiKeyAuth:
     in: header

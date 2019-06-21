@@ -14,18 +14,25 @@ type Source interface {
 }
 
 type Revdol interface {
-	GetForumCount(id, currentPage int) interface{}
-	GetAllIdolForumCount(currentPage int) interface{}
-	GetFansNumById(id, currentPage int) interface{}
-	GetPopularNumById(id, currentPage int) interface{}
 	GetAllIdolMeta(currentPage int) interface{}
 	GetIdolMetaById(id, currentPage int) interface{}
+	GetFansNumById(id, currentPage int) interface{}
+	GetPopularNumById(id, currentPage int) interface{}
+
+	GetAllForum(params map[string]interface{}) interface{}
 	GetForumById(id int) interface{}
-	GetAllForum(currentPage int) interface{}
+
 	GetAllUser(currentPage int) interface{}
 	GetUserById(id int) interface{}
 	GetUserContributeById(id int) interface{}
 	GetAllUserContribute(currentPage int) interface{}
+
 	GetIdolById(id int) interface{}
 	GetAllIdol() interface{}
+
+	GetIdolForumCount(id, currentPage int) interface{}
+	GetAllIdolForumCount(currentPage int) interface{}
+	GetUserForumCount(id, currentPage int) interface{}
+
+	SearchUser(keyWord string) interface{}
 }
