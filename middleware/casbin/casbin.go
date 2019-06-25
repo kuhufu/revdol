@@ -6,7 +6,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	etcdwatcher "github.com/kuhufu/etcd3-watcher"
 	. "github.com/kuhufu/revdol/config"
-	val "github.com/kuhufu/revdol/constant"
+	"github.com/kuhufu/revdol/constant"
 	"github.com/kuhufu/revdol/model"
 	"log"
 	"time"
@@ -36,7 +36,7 @@ func GetEnforce() *casbin.SyncedEnforcer {
 
 func Check(c *gin.Context) bool {
 	var account *model.Account
-	if u, exists := c.Get(val.AccountKey); !exists {
+	if u, exists := c.Get(constant.AccountKey); !exists {
 		return false
 	} else {
 		account = u.(*model.Account)
