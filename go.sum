@@ -42,11 +42,14 @@ github.com/bradleypeabody/gorilla-sessions-memcache v0.0.0-20181103040241-659414
 github.com/casbin/casbin v1.7.0/go.mod h1:c67qKN6Oum3UF5Q1+BByfFxkwKvhwW57ITjqwtzR1KE=
 github.com/casbin/casbin v1.8.3 h1:tIrXu7UGj0ECpV4tQhQy9sE2gJZyKNG0tQDEKQiuTYQ=
 github.com/casbin/casbin v1.8.3/go.mod h1:z8uPsfBJGUsnkagrt3G8QvjgTKFMBJ32UP8HpZllfog=
+github.com/cespare/xxhash v1.1.0 h1:a6HrQnmkObjyL+Gs60czilIUGqrzKutQD6XZog3p+ko=
 github.com/cespare/xxhash v1.1.0/go.mod h1:XrSqR1VqqWfGrhpAt58auRo0WTKS1nRRg3ghfAqPWnc=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
 github.com/cloudflare/golz4 v0.0.0-20150217214814-ef862a3cdc58/go.mod h1:EOBUe0h4xcZ5GoxqC5SDxFQ8gwyZPKQoEzownBlhI80=
 github.com/codegangsta/negroni v1.0.0 h1:+aYywywx4bnKXWvoWtRfJ91vC59NbEhEY03sZjQhbVY=
 github.com/codegangsta/negroni v1.0.0/go.mod h1:v0y3T5G7Y1UlFfyxFn/QLRU4a2EuNau2iZY63YTKWo0=
+github.com/coocood/freecache v1.1.0 h1:ENiHOsWdj1BrrlPwblhbn4GdAsMymK3pZORJ+bJGAjA=
+github.com/coocood/freecache v1.1.0/go.mod h1:ePwxCDzOYvARfHdr1pByNct1at3CoKnsipOHwKlNbzI=
 github.com/coreos/bbolt v1.3.3 h1:n6AiVyVRKQFNb6mJlwESEvvLoDyiTzXX7ORAUlkeBdY=
 github.com/coreos/bbolt v1.3.3/go.mod h1:iRUV2dpdMOn7Bo10OQBFzIJO9kkE559Wcmn+qkEiiKk=
 github.com/coreos/etcd v3.3.13+incompatible h1:8F3hqu9fGYLBifCmRCJsicFqDx/D68Rt3q1JMazcgBQ=
@@ -200,6 +203,10 @@ github.com/kuhufu/etcd3-watcher v0.0.0-20190522170107-de37c7c7a5ac h1:LYdxPRFeqi
 github.com/kuhufu/etcd3-watcher v0.0.0-20190522170107-de37c7c7a5ac/go.mod h1:w0a+wbvmr6TQy+HEynHWxn0ynObmTTj87U4R7ra53qY=
 github.com/kuhufu/flyredis v0.0.0-20190523122328-cf209fb075b8 h1:euTlVLiFQe1SqhppdoJAIs7+DNdGzLkgMdS6c5/+BNM=
 github.com/kuhufu/flyredis v0.0.0-20190523122328-cf209fb075b8/go.mod h1:njRdOW4yXhOgejJnCG+ZW8YUFcptwsW1j4ATSX1iYK4=
+github.com/kuhufu/flyredis v0.0.0-20190625155346-9b261908a801 h1:B5CrjzWmuCisC+xY+yCRUegvKRh1nhb6k4JeGsOWSu8=
+github.com/kuhufu/flyredis v0.0.0-20190625155346-9b261908a801/go.mod h1:7JBBE8dndAUbb8zq33LpkN2mNKTU8qOD0gpsbN5cQRo=
+github.com/kuhufu/flyredis v0.0.0-20190625161209-9b82596ef45e h1:bymNlU1bozTSY9ogU5oGIhQ+paOrhLKK3JqnnP4Z4Hc=
+github.com/kuhufu/flyredis v0.0.0-20190625161209-9b82596ef45e/go.mod h1:7JBBE8dndAUbb8zq33LpkN2mNKTU8qOD0gpsbN5cQRo=
 github.com/labstack/echo v3.3.10+incompatible h1:pGRcYk231ExFAyoAjAfD85kQzRJCRI8bbnE7CX5OEgg=
 github.com/labstack/echo v3.3.10+incompatible/go.mod h1:0INS7j/VjnFxD4E2wkz67b8cVwCLbBmJyDaka6Cmk1s=
 github.com/labstack/gommon v0.2.8 h1:JvRqmeZcfrHC5u6uVleB4NxxNbzx6gpbJiQknDbKQu0=
