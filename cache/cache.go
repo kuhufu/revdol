@@ -1,6 +1,7 @@
 package cache
 
 type cacheStore interface {
+	//expireSeconds <= 0 表示永不过期
 	Set(key string, val []byte, expireSeconds int) error
 
 	Get(key string) (value []byte, err error)
