@@ -8,13 +8,13 @@ import (
 
 func router(r *gin.Engine) {
 
-	r.Use(Gzip())
+	r.Use(Gzip()) //响应压缩后期可以用 nginx 代替
 	r.Use(Cors())
 
 	r.Static("/static", "static/")
 	r.GET("/", handler.ServeFile("static/index.html"))
-	r.Any("/v1/*path", handler.Relay)
 
+	//账号管理
 	account := r.Group("/account")
 	{
 		account.GET("/register", handler.ServeFile("static/register.html"))
@@ -31,6 +31,13 @@ func router(r *gin.Engine) {
 		account.GET("/info", auth.Middleware, handler.AccountInfo)
 	}
 
+	//转发 v1 的任何请求到乐元素
+	v1 := r.Group("/v1")
+	{
+		v1.Any("/*path", handler.Relay)
+	}
+
+	//自己的 v2
 	v2 := r.Group("/v2")
 	v2.Use(Secure(), auth.Middleware)
 	{
