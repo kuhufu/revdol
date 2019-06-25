@@ -3,6 +3,9 @@ appname: "revdol"
 #是否是开发模式
 dev: true
 
+#是否开启 auth，/v2/*受影响
+enable_auth: false
+
 gin:
   release: false
   color: true

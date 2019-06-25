@@ -3,6 +3,7 @@ package handler
 import (
 	jwt "github.com/appleboy/gin-jwt"
 	"github.com/gin-gonic/gin"
+	"github.com/kuhufu/revdol/constant"
 	"github.com/kuhufu/revdol/dao"
 	"github.com/kuhufu/revdol/middleware/auth"
 	"github.com/kuhufu/revdol/model"
@@ -31,10 +32,10 @@ func Login(c *gin.Context) {
 	if err := c.Bind(&login); err != nil {
 		return
 	}
-	user, err := dao.Login(login.Identity, login.Password)
-	c.Set("loginInfo", gin.H{
-		"user":  user,
-		"error": err,
+	account, err := dao.Login(login.Identity, login.Password)
+	c.Set(constant.LoginInfo, gin.H{
+		constant.AccountKey: account,
+		"error":             err,
 	})
 	auth.LoginHandler(c)
 }
@@ -94,7 +95,7 @@ func ChangePassword(c *gin.Context) {
 		return
 	}
 
-	account, _ := c.Get("account")
+	account, _ := c.Get(constant.AccountKey)
 	dao.ChangePassword(account.(*model.Account).ID, f.Password)
 	c.JSON(http.StatusOK, gin.H{
 		"message": "change password successful",
@@ -102,6 +103,6 @@ func ChangePassword(c *gin.Context) {
 }
 
 func AccountInfo(c *gin.Context) {
-	a, _ := c.Get("account")
+	a, _ := c.Get(constant.AccountKey)
 	c.JSON(http.StatusOK, a)
 }

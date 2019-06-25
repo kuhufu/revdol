@@ -21,7 +21,11 @@ func init() {
 var Config = struct {
 	APPName string
 
+	//影响的中间件：Secure，jwt
 	Dev bool `default:"false"`
+
+	//是否开启 auth，/v2/* 受影响
+	EnableAuth bool `default:"false" json:"enable_auth" yaml:"enable_auth"`
 
 	Config struct {
 		Print bool `default:"false"`
