@@ -12,11 +12,12 @@ type RedisCache struct {
 }
 
 func (c *RedisCache) Set(key string, val []byte, expireSeconds int) error {
-	err := c.inner.SET(key, val).Error()
-	if err != nil {
+	var err error
+	if expireSeconds <= 0 {
+		err = c.inner.SET(key, val).Error()
 		return err
 	}
-	err = c.inner.EXPIRE(key, expireSeconds).Error()
+	err = c.inner.SET(key, val, "EX", expireSeconds).Error()
 	return err
 }
 
