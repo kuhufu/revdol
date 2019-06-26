@@ -3,6 +3,7 @@ package dao
 import (
 	"encoding/json"
 	"github.com/kuhufu/revdol/cache"
+	"github.com/kuhufu/revdol/constant"
 	"github.com/kuhufu/revdol/dao/Interface"
 	"github.com/kuhufu/revdol/dao/mongo"
 )
@@ -74,7 +75,7 @@ func SearchUser(keyWord string) interface{} {
 	result, err := cache.GetUnmarshal(cacheKeyWord)
 	if err != nil {
 		data, _ := json.Marshal(source.SearchUser(keyWord))
-		cache.Set(cacheKeyWord, data, 10)
+		cache.Set(cacheKeyWord, data, constant.ExpireSeconds)
 		result, _ := cache.GetUnmarshal(cacheKeyWord)
 		return result
 	}
