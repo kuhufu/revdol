@@ -27,7 +27,7 @@ func (s *Source) GetIdolMetaById(id string) interface{} {
 	return GetIdolMetaById(id)
 }
 
-func (s *Source) GetForumById(id string) []byte {
+func (s *Source) GetForumById(id string) interface{} {
 	return GetForumById(id)
 }
 

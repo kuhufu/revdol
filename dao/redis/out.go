@@ -70,12 +70,14 @@ func GetIdolMetaById(id string) interface{} {
 	return result
 }
 
-func GetForumById(id string) []byte {
-	result, err := pool.HGET("revdol:forum:detail", id).Bytes()
+func GetForumById(id string) interface{} {
+	data, err := pool.HGET("revdol:forum:detail", id).Bytes()
 	if err != nil {
 		log.Println(err)
 		return nil
 	}
+	var result interface{}
+	json.Unmarshal(data, &result)
 	return result
 }
 
