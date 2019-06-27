@@ -41,7 +41,9 @@ func TestGetForumById(t *testing.T) {
 }
 
 func TestGetAllForum(t *testing.T) {
-	res := GetAllForum(2)
+	res := GetAllForum(map[string]interface{}{
+		"page": 1,
+	})
 	util.Pretty(res)
 }
 func TestGetPopularNumById(t *testing.T) {
@@ -54,12 +56,14 @@ func TestSearchUser(t *testing.T) {
 	util.Pretty(res)
 }
 
-func TestGetUserForum(t *testing.T) {
-	res := GetUserForum(1001, 1)
-	util.Pretty(res)
-}
-
 func TestGetUserForumCount(t *testing.T) {
 	res := GetUserForumCount(1001, 1)
 	util.Pretty(res)
+}
+
+//BenchmarkGetForumById-8   	    5000	    294830 ns/op
+func BenchmarkGetForumById(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		GetForumById(17115)
+	}
 }
