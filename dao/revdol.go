@@ -6,6 +6,8 @@ import (
 	"github.com/kuhufu/revdol/constant"
 	"github.com/kuhufu/revdol/dao/Interface"
 	"github.com/kuhufu/revdol/dao/mongo"
+	"log"
+	"sync"
 )
 
 var source Interface.Revdol = mongo.New()
@@ -70,14 +72,30 @@ func GetAllIdol() interface{} {
 	return source.GetAllIdol()
 }
 
-func SearchUser(keyWord string) interface{} {
+var rwMu = sync.RWMutex{}
+
+func SearchUser(keyWord string) (result interface{}) {
 	cacheKeyWord := "search:wd:" + keyWord
+	rwMu.RLock()
 	result, err := cache.GetUnmarshal(cacheKeyWord)
+	rwMu.RUnlock()
+
 	if err != nil {
+		log.Println("cache expired")
+		rwMu.Lock()
+		result, err = cache.GetUnmarshal(cacheKeyWord)
+		if err == nil {
+			log.Println("already be cached, return directly")
+			rwMu.Unlock()
+			return
+		}
+		log.Println("get data from mongodb")
 		data, _ := json.Marshal(source.SearchUser(keyWord))
 		cache.Set(cacheKeyWord, data, constant.ExpireSeconds)
-		result, _ := cache.GetUnmarshal(cacheKeyWord)
-		return result
+		rwMu.Unlock()
+		log.Println("data cached")
+		result, _ = cache.GetUnmarshal(cacheKeyWord)
+		return
 	}
-	return result
+	return
 }
