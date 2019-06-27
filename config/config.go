@@ -27,6 +27,10 @@ var Config = struct {
 	//是否开启 auth
 	EnableAuth bool `default:"false" json:"enable_auth" yaml:"enable_auth"`
 
+	Cache struct {
+		Type string `default:"mem" yaml:"type"`
+	}
+
 	Config struct {
 		Print bool `default:"false"`
 	} `json:"config"`

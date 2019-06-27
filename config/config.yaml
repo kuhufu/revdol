@@ -6,13 +6,16 @@ dev: true
 #是否开启 auth
 enable_auth: false
 
+cache:
+  type: "mem"
+
 gin:
-  release: false
+  release: true
   color: true
 
 config:
   #是否在控制台打印配置
-  print: false
+  print: true
 
 mongo:
   url: "mongodb://localhost:27017"
