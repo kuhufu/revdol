@@ -3,6 +3,7 @@ module github.com/kuhufu/revdol
 go 1.12
 
 require (
+	github.com/OneOfOne/xxhash v1.2.5 // indirect
 	github.com/alecthomas/template v0.0.0-20160405071501-a0175ee3bccc
 	github.com/appleboy/gin-jwt v2.5.0+incompatible
 	github.com/appleboy/gin-jwt/v2 v2.6.2
@@ -32,10 +33,11 @@ require (
 	github.com/jonboulle/clockwork v0.1.0 // indirect
 	github.com/kuhufu/etcd3-watcher v0.0.0-20190522170107-de37c7c7a5ac
 	github.com/kuhufu/flyredis v0.0.0-20190626081007-7acf0472d5e4
-	github.com/kuhufu/gcache v0.0.0-20190626085624-8546b69254e6
+	github.com/kuhufu/gcache v0.0.0-20190626163411-d4e8ca728764
 	github.com/mailru/easyjson v0.0.0-20190620125010-da37f6c1e481 // indirect
 	github.com/prometheus/client_golang v0.9.3 // indirect
 	github.com/soheilhy/cmux v0.1.4 // indirect
+	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/swaggo/gin-swagger v1.1.1-0.20190613072437-ddb15761267c
 	github.com/swaggo/swag v1.5.1
 	github.com/tidwall/pretty v1.0.0
