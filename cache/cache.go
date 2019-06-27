@@ -2,8 +2,8 @@ package cache
 
 import (
 	"github.com/kuhufu/gcache"
+	. "github.com/kuhufu/revdol/config"
 )
-import . "github.com/kuhufu/revdol/config"
 
 var cacheSize = 100 * 1024 * 1024
 
