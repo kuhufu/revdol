@@ -33,7 +33,7 @@ require (
 	github.com/jonboulle/clockwork v0.1.0 // indirect
 	github.com/kuhufu/etcd3-watcher v0.0.0-20190522170107-de37c7c7a5ac
 	github.com/kuhufu/flyredis v0.0.0-20190626081007-7acf0472d5e4
-	github.com/kuhufu/gcache v0.0.0-20190626163411-d4e8ca728764
+	github.com/kuhufu/gcache v0.0.0-20190627181003-7aba70d2d344
 	github.com/mailru/easyjson v0.0.0-20190620125010-da37f6c1e481 // indirect
 	github.com/prometheus/client_golang v0.9.3 // indirect
 	github.com/soheilhy/cmux v0.1.4 // indirect

@@ -209,6 +209,8 @@ github.com/kuhufu/flyredis v0.0.0-20190626081007-7acf0472d5e4 h1:Xmx9PWwW+5IA+wx
 github.com/kuhufu/flyredis v0.0.0-20190626081007-7acf0472d5e4/go.mod h1:7JBBE8dndAUbb8zq33LpkN2mNKTU8qOD0gpsbN5cQRo=
 github.com/kuhufu/gcache v0.0.0-20190626163411-d4e8ca728764 h1:QktpS0bMi9M9gQ5grWhqftJyZdfxFTaF6pyRJCZVYzk=
 github.com/kuhufu/gcache v0.0.0-20190626163411-d4e8ca728764/go.mod h1:4JSfFYsaHNLBTguJ0kMpmx32y0ot0A1jqg4+5k+Nmdg=
+github.com/kuhufu/gcache v0.0.0-20190627181003-7aba70d2d344 h1:97mJUJ363qZ8rkFdJA23yeXCx94M7W5fVjbvm4ecOkU=
+github.com/kuhufu/gcache v0.0.0-20190627181003-7aba70d2d344/go.mod h1:4JSfFYsaHNLBTguJ0kMpmx32y0ot0A1jqg4+5k+Nmdg=
 github.com/labstack/echo v3.3.10+incompatible h1:pGRcYk231ExFAyoAjAfD85kQzRJCRI8bbnE7CX5OEgg=
 github.com/labstack/echo v3.3.10+incompatible/go.mod h1:0INS7j/VjnFxD4E2wkz67b8cVwCLbBmJyDaka6Cmk1s=
 github.com/labstack/gommon v0.2.8 h1:JvRqmeZcfrHC5u6uVleB4NxxNbzx6gpbJiQknDbKQu0=
