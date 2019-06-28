@@ -9,7 +9,7 @@ var (
 )
 
 func New() Source {
-	return Source(1)
+	return Source(0)
 }
 
 func (s Source) GetAllIdolMeta(currentPage int) interface{} {
@@ -29,7 +29,7 @@ func (s Source) GetPopularNumById(id, currentPage int) interface{} {
 }
 
 func (s Source) GetAllForum(params map[string]interface{}) interface{} {
-	return GetAllForum()
+	panic("implement me")
 }
 
 func (s Source) GetForumById(id int) interface{} {
@@ -37,7 +37,7 @@ func (s Source) GetForumById(id int) interface{} {
 }
 
 func (s Source) GetAllUser(currentPage int) interface{} {
-	return GetAllUser()
+	panic("implement me")
 }
 
 func (s Source) GetUserById(id int) interface{} {
@@ -49,7 +49,7 @@ func (s Source) GetUserContributeById(id int) interface{} {
 }
 
 func (s Source) GetAllUserContribute(currentPage int) interface{} {
-	return GetAllUserContribute()
+	panic("implement me")
 }
 
 func (s Source) GetIdolById(id int) interface{} {
