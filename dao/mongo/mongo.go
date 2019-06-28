@@ -8,12 +8,12 @@ var (
 	_ Interface.Revdol = (Source)(nil)
 )
 
-func (Source) GetAllForum(params map[string]interface{}) interface{} {
-	return GetAllForum(params)
-}
-
 func New() Source {
 	return Source(0)
+}
+
+func (Source) GetAllForum(params map[string]interface{}) interface{} {
+	return GetAllForum(params)
 }
 
 func (Source) GetUserForumCount(id, currentPage int) interface{} {
