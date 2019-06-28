@@ -24,7 +24,7 @@ type ForumInfo struct {
 	Count int    `json:"count"`
 }
 
-func GetForumCount(id string) interface{} {
+func GetIdolForumCount(id string) interface{} {
 	result, err := pool.HGETALL("statistics:forum_count:" + id).IntMap()
 	if err != nil {
 		log.Println(err)
