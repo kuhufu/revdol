@@ -29,7 +29,7 @@ var Config = struct {
 
 	Cache struct {
 		Type string `default:"mem" yaml:"type"`
-	}
+	} `json:"cache"`
 
 	Config struct {
 		Print bool `default:"false"`
