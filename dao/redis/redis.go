@@ -5,7 +5,7 @@ import "github.com/kuhufu/revdol/dao/Interface"
 type Source int
 
 var (
-	_ Interface.Revdol = (Source)(nil)
+	_ Interface.Revdol = Source(0)
 )
 
 func New() Source {
