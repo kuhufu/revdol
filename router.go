@@ -74,6 +74,7 @@ func router(r *gin.Engine) {
 		{
 			search.GET("", handler.ServeFile("static/search.html"))
 			search.GET("/user", handler.SearchUser)
+			search.GET("/forum", handler.SearchForum)
 		}
 	}
 }
