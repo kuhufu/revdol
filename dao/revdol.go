@@ -74,7 +74,7 @@ func GetAllIdol() interface{} {
 
 var rwMu = sync.RWMutex{}
 
-func SearchUser(keyWord string) (result interface{}) {
+func SearchUser(keyWord string, page int) (result interface{}) {
 	cacheKeyWord := "search:wd:" + keyWord
 	rwMu.RLock()
 	result, err := cache.GetUnmarshal(cacheKeyWord)
@@ -90,7 +90,7 @@ func SearchUser(keyWord string) (result interface{}) {
 			return
 		}
 		log.Println("get data from mongodb")
-		data, _ := json.Marshal(source.SearchUser(keyWord))
+		data, _ := json.Marshal(source.SearchUser(keyWord, page))
 		cache.Set(cacheKeyWord, data, constant.ExpireSeconds)
 		rwMu.Unlock()
 		log.Println("data cached")
@@ -98,4 +98,8 @@ func SearchUser(keyWord string) (result interface{}) {
 		return
 	}
 	return
+}
+
+func SearchForum(field, keyWord string, page int) (result interface{}) {
+	return source.SearchForum(field, keyWord, page)
 }
