@@ -34,5 +34,6 @@ type Revdol interface {
 	GetAllIdolForumCount(currentPage int) interface{}
 	GetUserForumCount(id, currentPage int) interface{}
 
-	SearchUser(keyWord string) interface{}
+	SearchUser(keyWord string, currentPage int) interface{}
+	SearchForum(filed, keyWord string, currentPage int) interface{}
 }
