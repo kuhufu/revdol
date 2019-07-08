@@ -7,6 +7,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
+	"math"
 	"time"
 )
 
@@ -25,14 +26,14 @@ func init() {
 }
 
 func GetIdolForumCount(id int, currentPage int) interface{} {
-	perPage := perPage * 2
-	skip := int64(currentPage-1) * perPage
+	limit := perPage * 2
+	skip := skipNum(currentPage, limit)
 	cursor, err := mdb.Collection("idols_forum_count").Find(context.TODO(),
 		bson.M{"idol_id": id},
 		&options.FindOptions{
 			Sort:  bson.M{"date": -1},
 			Skip:  &skip,
-			Limit: &perPage,
+			Limit: &limit,
 			Projection: bson.M{
 				"_id":   0,
 				"count": 1,
@@ -45,7 +46,7 @@ func GetIdolForumCount(id int, currentPage int) interface{} {
 
 func GetAllIdolForumCount(currentPage int) interface{} {
 	perPage := idolNum
-	skip := int64(currentPage-1) * perPage
+	skip := skipNum(currentPage, perPage)
 	cursor, err := mdb.Collection("idols_forum_count").Find(context.TODO(),
 		bson.M{},
 		&options.FindOptions{
@@ -68,7 +69,7 @@ func GetAllIdolForumCount(currentPage int) interface{} {
 
 func GetFansNumById(id int, currentPage int) interface{} {
 	perPage := perPage * 2
-	skip := int64(currentPage-1) * perPage
+	skip := skipNum(currentPage, perPage)
 	cursor, err := mdb.Collection("idols_meta").Find(context.TODO(),
 		bson.M{"id": id},
 		&options.FindOptions{
@@ -88,7 +89,7 @@ func GetFansNumById(id int, currentPage int) interface{} {
 
 func GetPopularNumById(id int, currentPage int) interface{} {
 	perPage := perPage * 2
-	skip := int64(currentPage-1) * perPage
+	skip := skipNum(currentPage, perPage)
 	cursor, err := mdb.Collection("idols_meta").Find(context.TODO(),
 		bson.M{"id": id},
 		&options.FindOptions{
@@ -108,7 +109,7 @@ func GetPopularNumById(id int, currentPage int) interface{} {
 
 func GetAllIdolMeta(currentPage int) interface{} {
 	perPage := int64(idolNum)
-	skip := int64(currentPage-1) * perPage
+	skip := skipNum(currentPage, perPage)
 	cursor, err := mdb.Collection("idols_meta").Find(context.TODO(),
 		bson.M{},
 		&options.FindOptions{
@@ -182,7 +183,8 @@ func GetAllForum(params map[string]interface{}) interface{} {
 }
 
 func queryForum(filter bson.M, currentPage int) interface{} {
-	skip := int64(currentPage-1) * perPage
+	perPage := perPage
+	skip := skipNum(currentPage, perPage)
 	cursor, err := mdb.Collection("forums").Find(
 		context.TODO(),
 		filter,
@@ -204,7 +206,25 @@ func queryForum(filter bson.M, currentPage int) interface{} {
 			},
 		})
 
-	return many(cursor, err)
+	res := map[string]int{}
+	err = mdb.RunCommand(context.TODO(), bson.D{
+		{"count", "forums"},
+		{"query", filter},
+	}).Decode(&res)
+	if err != nil {
+		log.Println(err)
+	}
+	count := res["n"]
+	forums := many(cursor, err)
+	return map[string]interface{}{
+		"_meta": map[string]interface{}{
+			"count":       count,
+			"totalPage":   int(math.Ceil(float64(count) / float64(perPage))),
+			"currentPage": currentPage,
+			"perPage":     perPage,
+		},
+		"items": forums,
+	}
 }
 
 func GetAllUser(currentPage int) interface{} {
@@ -262,7 +282,7 @@ func GetUserContributeById(id int) interface{} {
 }
 
 func GetAllUserContribute(currentPage int) interface{} {
-	skip := int64(currentPage-1) * perPage
+	skip := skipNum(currentPage, perPage)
 	cursor, err := mdb.Collection("contributes").Find(context.TODO(),
 		bson.M{},
 		&options.FindOptions{
@@ -289,8 +309,9 @@ func GetAllIdol() interface{} {
 	return many(cursor, err)
 }
 
-func SearchUser(keyWord string) interface{} {
-	var limit int64 = 10
+func SearchUser(keyWord string, currentPage int) interface{} {
+	var perPage int64 = 10
+	skip := skipNum(currentPage, perPage)
 	cursor, err := mdb.Collection("users").Find(context.TODO(),
 		bson.M{
 			"nickname": bson.M{
@@ -298,7 +319,8 @@ func SearchUser(keyWord string) interface{} {
 				"$options": "i",
 			}},
 		&options.FindOptions{
-			Limit: &limit,
+			Limit: &perPage,
+			Skip:  &skip,
 			Projection: bson.M{
 				"_id":      0,
 				"uid":      1, //用 uid 代替 id，id现在有问题
@@ -306,18 +328,80 @@ func SearchUser(keyWord string) interface{} {
 			},
 		},
 	)
+	count := count(bson.D{
+		{"count", "users"},
+		{"query", bson.M{"nickname": bson.M{
+			"$regex":   keyWord,
+			"$options": "i",
+		}}},
+	})
 
-	return many(cursor, err)
+	return map[string]interface{}{
+		"_meta": pageInfo(count, perPage, currentPage),
+		"items": many(cursor, err),
+	}
 }
 
+func SearchForum(field, keyWord string, currentPage int) interface{} {
+	var perPage int64 = 10
+	skip := skipNum(currentPage, perPage)
+	cursor, err := mdb.Collection("forums").Find(context.TODO(),
+		bson.M{
+			field: bson.M{
+				"$regex":   keyWord,
+				"$options": "i",
+			}},
+		&options.FindOptions{
+			Limit: &perPage,
+			Skip:  &skip,
+			Sort: bson.M{
+				"id": -1,
+			},
+			Projection: bson.M{
+				"_id":           0,
+				"id":            1,
+				"idol_id":       1,
+				"user_id":       1,
+				"created_time":  1,
+				"title":         1,
+				"content":       1,
+				"images":        1,
+				"thumb":         1,
+				"forum_picture": 1,
+			},
+		},
+	)
+
+	count := count(bson.D{
+		{"count", "forums"},
+		{"query", bson.M{
+			field: bson.M{
+				"$regex":   keyWord,
+				"$options": "i",
+			}}},
+	})
+
+	return map[string]interface{}{
+		"_meta": pageInfo(count, perPage, currentPage),
+		"items": many(cursor, err),
+	}
+}
 func GetUserForumCount(id, currentPage int) interface{} {
 	cursor, err := mdb.Collection("forums").Aggregate(context.TODO(), bson.A{
 		bson.M{"$match": bson.M{
 			"user_id": id,
 		}},
 		bson.M{"$group": bson.M{
-			"_id":   "$user_id",
+			"_id":   "$idol_id",
 			"count": bson.M{"$sum": 1},
+		}},
+		bson.M{"$sort": bson.M{
+			"count": -1,
+		}},
+		bson.M{"$project": bson.M{
+			"_id":     0,
+			"idol_id": "$_id",
+			"count":   1,
 		}},
 	})
 
@@ -336,4 +420,27 @@ func groupForumCount(match, group bson.M, currentPage int) interface{} {
 		})
 
 	return many(cursor, err)
+}
+
+func skipNum(currentPage int, perPage int64) int64 {
+	return int64(currentPage-1) * perPage
+}
+
+func count(query bson.D) int {
+	res := map[string]int{}
+	err := mdb.RunCommand(context.TODO(), query).Decode(&res)
+	if err != nil {
+		log.Println(err)
+		return -1
+	}
+	return res["n"]
+}
+
+func pageInfo(count int, perPage int64, currentPage int) interface{} {
+	return map[string]interface{}{
+		"count":       count,
+		"totalPage":   int(math.Ceil(float64(count) / float64(perPage))),
+		"currentPage": currentPage,
+		"perPage":     perPage,
+	}
 }
