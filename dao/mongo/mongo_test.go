@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/kuhufu/revdol/util"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
@@ -52,7 +53,12 @@ func TestGetPopularNumById(t *testing.T) {
 }
 
 func TestSearchUser(t *testing.T) {
-	res := SearchUser("鱿鱼丝")
+	res := SearchUser("鱿鱼丝", 1)
+	util.Pretty(res)
+}
+
+func TestSource_SearchForumTitle(t *testing.T) {
+	res := SearchForum("title", "好", 1)
 	util.Pretty(res)
 }
 
@@ -61,9 +67,21 @@ func TestGetUserForumCount(t *testing.T) {
 	util.Pretty(res)
 }
 
+func TestRunCommand(t *testing.T) {
+	count := map[string]int{}
+	mdb.RunCommand(context.TODO(), bson.M{"count": "forums"}).Decode(&count)
+	fmt.Println(count)
+}
+
 //BenchmarkGetForumById-8   	    5000	    294830 ns/op
 func BenchmarkGetForumById(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		GetForumById(17115)
+	}
+}
+
+func BenchmarkGetAllForum(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		mdb.Collection("forums").CountDocuments(context.TODO(), bson.M{})
 	}
 }
