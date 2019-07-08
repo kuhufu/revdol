@@ -80,7 +80,7 @@ func CountAllIdolForum(c *gin.Context) {
 // @Accept  json
 // @Produce  json
 // @Param   id		path	int	true	"Idol ID"
-// @Param   page	query	int	page	"page number"
+// @Param   page	query	int	false	"page number"
 // @Success 200 {string} string	"ok"
 // @Security ApiKeyAuth
 // @Router /idol/fans-num/{id} [get]
@@ -257,12 +257,33 @@ func IdolList(c *gin.Context) {
 // @Tags search
 // @Accept  json
 // @Produce  json
-// @Param   wd     query    string     true        "key word"
+// @Param   wd 		query    string		true     	"key word"
+// @Param	page	query	int			false    	"page number"
 // @Success 200 {string} string	"ok"
 // @Security ApiKeyAuth
 // @Router /search/user [get]
 func SearchUser(c *gin.Context) {
 	keyWord := c.Query("wd")
-	result := dao.SearchUser(keyWord)
+	page := QueryPage(c)
+	result := dao.SearchUser(keyWord, page)
+	c.JSON(200, result)
+}
+
+// @Summary search forum by title
+// @Description search forum
+// @Tags search
+// @Accept  json
+// @Produce  json
+// @Param   f     	query  	string    	true        "search field"
+// @Param   wd     	query	string    	true        "key word"
+// @Param	page	query	int  		false        "page number"
+// @Success 200 {string} string	"ok"
+// @Security ApiKeyAuth
+// @Router /search/forum [get]
+func SearchForum(c *gin.Context) {
+	keyWord := c.Query("wd")
+	field := c.Query("f")
+	page := QueryPage(c)
+	result := dao.SearchForum(field, keyWord, page)
 	c.JSON(200, result)
 }
