@@ -20,10 +20,6 @@ func (Source) GetUserForumCount(id, currentPage int) interface{} {
 	return GetUserForumCount(id, currentPage)
 }
 
-func (Source) SearchUser(keyWord string) interface{} {
-	return SearchUser(keyWord)
-}
-
 func (Source) GetIdolForumCount(id int, page int) interface{} {
 	return GetIdolForumCount(id, page)
 }
@@ -31,6 +27,7 @@ func (Source) GetIdolForumCount(id int, page int) interface{} {
 func (Source) GetAllIdolForumCount(page int) interface{} {
 	return GetAllIdolForumCount(page)
 }
+
 func (Source) GetFansNumById(id int, currentPage int) interface{} {
 	return GetFansNumById(id, currentPage)
 }
@@ -38,7 +35,6 @@ func (Source) GetFansNumById(id int, currentPage int) interface{} {
 func (Source) GetPopularNumById(id int, currentPage int) interface{} {
 	return GetPopularNumById(id, currentPage)
 }
-
 func (Source) GetAllIdolMeta(currentPage int) interface{} {
 	return GetAllIdolMeta(currentPage)
 }
@@ -73,4 +69,12 @@ func (Source) GetIdolById(id int) interface{} {
 
 func (Source) GetAllIdol() interface{} {
 	return GetAllIdol()
+}
+
+func (Source) SearchUser(keyWord string, currentPage int) interface{} {
+	return SearchUser(keyWord, currentPage)
+}
+
+func (Source) SearchForum(filed, keyWord string, currentPage int) interface{} {
+	return SearchForum(filed, keyWord, currentPage)
 }
