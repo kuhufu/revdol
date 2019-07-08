@@ -27,7 +27,17 @@
 <a href="v2/idol/fans-num/4">/idol/fans-num/4</a><br>
 <a href="v2/idol/popular-num/4">/idol/populars-num/4</a><br>
 
-<a href="v2/search">/search</a><br>
+<form action="/v2/search/user" method="get">
+    <label for="wd">用户搜索:</label>
+    <input type="text" id="wd" name="wd">
+    <input type="submit">
+</form>
+<form action="/v2/search/forum?f=title" method="get">
+    <label for="wd">论坛搜索:</label><br>
+    field:<input type="text" id="f" name="f" value="title"><br>
+    word:<input type="text" id="wd" name="wd">
+    <input type="submit">
+</form>
 
 <br>
 </body>
