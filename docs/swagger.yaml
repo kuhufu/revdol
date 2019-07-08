@@ -287,6 +287,38 @@ paths:
       summary: forum count
       tags:
       - idols
+  /search/forum:
+    get:
+      consumes:
+      - application/json
+      description: search forum
+      parameters:
+      - description: search field
+        in: query
+        name: f
+        required: true
+        type: string
+      - description: key word
+        in: query
+        name: wd
+        required: true
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: search forum by title
+      tags:
+      - search
   /search/user:
     get:
       consumes:
@@ -298,6 +330,10 @@ paths:
         name: wd
         required: true
         type: string
+      - description: page number
+        in: query
+        name: page
+        type: integer
       produces:
       - application/json
       responses:
